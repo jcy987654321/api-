@@ -1,0 +1,32 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Create New Remote Token</h2>
+    <form method="POST">
+        <label for="name">Token Name</label>
+        <input type="text" id="name" name="name" placeholder="Analytics Integration" required>
+
+        <label for="created_by">Created By</label>
+        <input type="text" id="created_by" name="created_by" value="admin">
+
+        <label>Scopes</label>
+        <ul>
+            {% for scope in available_scopes %}
+            <li>
+                <label>
+                    <input type="checkbox" name="scopes" value="{{ scope.value }}">
+                    {{ scope.label }} ({{ scope.value }})
+                </label>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <label for="rate_limit">Rate Limit per Minute</label>
+        <input type="number" id="rate_limit" name="rate_limit" min="1" max="6000" value="60">
+
+        <button type="submit" class="button">Create Token</button>
+        <a href="{{ url_for('admin_ui.tokens_list') }}" class="button secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Token Details</h2>
+    <p><strong>Name:</strong> {{ token.name }}</p>
+    <p><strong>Status:</strong> {{ 'Revoked' if token.revoked else 'Active' }}</p>
+    <p><strong>Scopes:</strong>
+        {% for scope in token.scope_list() %}
+            <span class="badge">{{ scope }}</span>
+        {% endfor %}
+    </p>
+    <p><strong>Rate Limit:</strong> {{ token.rate_limit_per_minute }} requests/minute</p>
+    <p><strong>Created At:</strong> {{ token.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+    <p><strong>Last Used:</strong> {{ token.last_used_at.strftime('%Y-%m-%d %H:%M') if token.last_used_at else 'Never' }}</p>
+
+    <form class="inline" method="POST" action="{{ url_for('admin_ui.tokens_revoke', token_id=token.id) }}">
+        <button type="submit" class="button danger">Revoke Token</button>
+    </form>
+    <form class="inline" method="POST" action="{{ url_for('admin_ui.tokens_activate', token_id=token.id) }}">
+        <button type="submit" class="button">Activate Token</button>
+    </form>
+    <form class="inline" method="POST" action="{{ url_for('admin_ui.tokens_delete', token_id=token.id) }}" onsubmit="return confirm('Delete this token permanently?');">
+        <button type="submit" class="button secondary">Delete Token</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>Recent Audit Logs</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Endpoint</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>IP</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ log.path }}</td>
+                <td>{{ log.method }}</td>
+                <td>{{ log.status_code }}</td>
+                <td>{{ log.ip_address }}</td>
+                <td>{{ log.detail }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6">No audit logs yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

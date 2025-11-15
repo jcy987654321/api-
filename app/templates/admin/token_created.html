@@ -1,0 +1,28 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Token Created Successfully</h2>
+    <p><strong>⚠️ Important:</strong> Save this token now. You won't be able to see it again!</p>
+    
+    <div style="background: #ecf0f1; padding: 1rem; border-radius: 4px; margin: 1rem 0; font-family: monospace; word-break: break-all;">
+        <strong>Token:</strong><br>
+        {{ raw_token }}
+    </div>
+
+    <div style="background: #ecf0f1; padding: 1rem; border-radius: 4px; margin: 1rem 0; font-family: monospace; word-break: break-all;">
+        <strong>Secret Key:</strong><br>
+        {{ token.secret_key }}
+    </div>
+
+    <h3>Token Details</h3>
+    <ul>
+        <li><strong>Name:</strong> {{ token.name }}</li>
+        <li><strong>Scopes:</strong> {{ token.scope_list()|join(', ') }}</li>
+        <li><strong>Rate Limit:</strong> {{ token.rate_limit_per_minute }} requests/minute</li>
+        <li><strong>Created By:</strong> {{ token.created_by }}</li>
+    </ul>
+
+    <a href="{{ url_for('admin_ui.tokens_list') }}" class="button">Back to Tokens</a>
+</div>
+{% endblock %}
