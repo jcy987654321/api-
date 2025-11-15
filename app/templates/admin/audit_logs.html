@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Audit Logs</h2>
+    <p>Total Logs: {{ pagination.total }} | Page {{ pagination.page }} of {{ pagination.pages }}</p>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Token ID</th>
+                <th>Timestamp</th>
+                <th>Method</th>
+                <th>Path</th>
+                <th>Success</th>
+                <th>Status</th>
+                <th>IP</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in pagination.items %}
+            <tr>
+                <td>{{ log.id }}</td>
+                <td>
+                    {% if log.token_id %}
+                        <a href="{{ url_for('admin_ui.tokens_detail', token_id=log.token_id) }}">{{ log.token_id }}</a>
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ log.method }}</td>
+                <td>{{ log.path }}</td>
+                <td>{{ '✓' if log.success else '✗' }}</td>
+                <td>{{ log.status_code }}</td>
+                <td>{{ log.ip_address }}</td>
+                <td>{{ log.detail }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9">No audit logs found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if pagination.pages > 1 %}
+    <div style="margin-top: 1rem;">
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('admin_ui.audit_logs', page=pagination.prev_num) }}" class="button">← Previous</a>
+        {% endif %}
+        {% if pagination.has_next %}
+            <a href="{{ url_for('admin_ui.audit_logs', page=pagination.next_num) }}" class="button">Next →</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

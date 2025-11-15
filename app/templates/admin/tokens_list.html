@@ -1,0 +1,64 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="card">
+    <h2>Remote Access Tokens</h2>
+    <a href="{{ url_for('admin_ui.tokens_create') }}" class="button">Create New Token</a>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Scopes</th>
+                <th>Status</th>
+                <th>Rate Limit/min</th>
+                <th>Last Used</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for token in tokens %}
+            <tr>
+                <td>{{ token.id }}</td>
+                <td>{{ token.name }}</td>
+                <td>
+                    {% for scope in token.scope_list() %}
+                        <span class="badge">{{ scope }}</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if token.revoked %}
+                        <span class="badge revoked">Revoked</span>
+                    {% else %}
+                        <span class="badge">Active</span>
+                    {% endif %}
+                </td>
+                <td>{{ token.rate_limit_per_minute }}</td>
+                <td>{{ token.last_used_at.strftime('%Y-%m-%d %H:%M') if token.last_used_at else 'Never' }}</td>
+                <td>{{ token.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    <a href="{{ url_for('admin_ui.tokens_detail', token_id=token.id) }}" class="button secondary">Details</a>
+                    {% if token.revoked %}
+                        <form class="inline" method="POST" action="{{ url_for('admin_ui.tokens_activate', token_id=token.id) }}">
+                            <button type="submit" class="button">Activate</button>
+                        </form>
+                    {% else %}
+                        <form class="inline" method="POST" action="{{ url_for('admin_ui.tokens_revoke', token_id=token.id) }}">
+                            <button type="submit" class="button danger">Revoke</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="8">No tokens found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

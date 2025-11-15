@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+instance/
+.env
+app.db
+*.sqlite
+*.sqlite3
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/

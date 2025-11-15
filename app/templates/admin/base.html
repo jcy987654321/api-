@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Remote Admin</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; background: #f5f5f5; }
+        header { background: #2c3e50; color: #fff; padding: 1rem 2rem; }
+        main { padding: 2rem; }
+        nav a { color: #ecf0f1; margin-right: 1rem; text-decoration: none; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; background: #fff; }
+        th, td { border: 1px solid #ddd; padding: 0.75rem; text-align: left; }
+        th { background: #34495e; color: #fff; }
+        tr:nth-child(even) { background: #f2f2f2; }
+        .badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; background: #3498db; color: #fff; margin-right: 0.25rem; }
+        .badge.revoked { background: #e74c3c; }
+        .button { display: inline-block; padding: 0.5rem 1rem; background: #3498db; color: #fff; border-radius: 4px; text-decoration: none; margin-right: 0.5rem; }
+        .button.secondary { background: #95a5a6; }
+        .button.danger { background: #e74c3c; }
+        form.inline { display: inline; }
+        .flash { padding: 0.75rem 1rem; margin: 1rem 0; border-radius: 4px; }
+        .flash.success { background: #2ecc71; color: #fff; }
+        .flash.error { background: #e74c3c; color: #fff; }
+        .card { background: #fff; padding: 1rem 1.5rem; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; }
+        input[type="text"], input[type="number"], textarea, select { width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: 1px solid #ccc; border-radius: 4px; }
+        ul { list-style: none; padding: 0; }
+        ul li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Remote Admin Console</h1>
+        <nav>
+            <a href="{{ url_for('admin_ui.tokens_list') }}">Tokens</a>
+            <a href="{{ url_for('admin_ui.audit_logs') }}">Audit Logs</a>
+            <a href="/docs/remote-api.md">API Docs</a>
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
