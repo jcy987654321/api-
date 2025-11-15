@@ -1,64 +1,90 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Admin Dashboard')
 
 @section('content')
-<div class="container" style="padding: 2rem 0;">
-    <div style="margin-bottom: 2rem;">
-        <h2 style="color: #1f2937; margin-bottom: 0.5rem;">Admin Dashboard</h2>
-        <p style="color: #6b7280;">Welcome to the management system dashboard</p>
+<div class="container py-4">
+    <div class="mb-4">
+        <h1>Admin Dashboard</h1>
+        <p class="text-muted">Manage your site content and settings</p>
     </div>
 
-    <div style="
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-    ">
-        <div style="
-            padding: 1.5rem;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-left: 4px solid #3b82f6;
-        ">
-            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Total Users</p>
-            <p style="font-size: 2rem; font-weight: bold; color: #1f2937;">0</p>
+    <div class="row">
+        @if(auth()->user()->hasPermission('site_settings.manage'))
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-gear"></i> Site Settings</h5>
+                    <p class="card-text">Manage site branding, SEO, and contact information</p>
+                    <a href="{{ route('admin.site-settings.index') }}" class="btn btn-primary" data-pjax>Manage Settings</a>
+                </div>
+            </div>
         </div>
+        @endif
 
-        <div style="
-            padding: 1.5rem;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-left: 4px solid #10b981;
-        ">
-            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Total Orders</p>
-            <p style="font-size: 2rem; font-weight: bold; color: #1f2937;">0</p>
+        @if(auth()->user()->hasPermission('announcements.manage'))
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-megaphone"></i> Announcements</h5>
+                    <p class="card-text">Create and manage site announcements with scheduling</p>
+                    <a href="{{ route('admin.announcements.index') }}" class="btn btn-primary" data-pjax>Manage Announcements</a>
+                </div>
+            </div>
         </div>
+        @endif
 
-        <div style="
-            padding: 1.5rem;
-            background: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-left: 4px solid #f59e0b;
-        ">
-            <p style="color: #6b7280; font-size: 0.875rem; margin-bottom: 0.5rem;">Total Revenue</p>
-            <p style="font-size: 2rem; font-weight: bold; color: #1f2937;">$0.00</p>
+        @if(auth()->user()->hasPermission('donations.manage'))
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-cash-coin"></i> Donations</h5>
+                    <p class="card-text">Manage donation options and payment methods</p>
+                    <a href="{{ route('admin.donations.index') }}" class="btn btn-primary" data-pjax>Manage Donations</a>
+                </div>
+            </div>
         </div>
+        @endif
+
+        @if(auth()->user()->hasPermission('advertisements.manage'))
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-badge-ad"></i> Advertisements</h5>
+                    <p class="card-text">Create ad slots and manage advertisements</p>
+                    <a href="{{ route('admin.advertisements.index') }}" class="btn btn-primary" data-pjax>Manage Ads</a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if(auth()->user()->hasPermission('friend_links.manage'))
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-link-45deg"></i> Friend Links</h5>
+                    <p class="card-text">Review and approve friend link applications</p>
+                    <a href="{{ route('admin.friend-links.index') }}" class="btn btn-primary" data-pjax>Manage Links</a>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        @if(auth()->user()->hasPermission('audit_logs.view'))
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-journal-text"></i> Audit Logs</h5>
+                    <p class="card-text">View system activity and administrative actions</p>
+                    <a href="{{ route('admin.audit-logs.index') }}" class="btn btn-primary" data-pjax>View Logs</a>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
-    <div style="margin-top: 2rem;">
-        <a href="{{ route('home') }}" data-pjax style="
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #e5e7eb;
-            color: #1f2937;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-        ">
-            ← Back to Home
-        </a>
+    <div class="mt-4">
+        <a href="{{ route('home') }}" class="btn btn-outline-secondary" data-pjax>← Back to Home</a>
     </div>
 </div>
 @endsection

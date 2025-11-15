@@ -1,6 +1,7 @@
 import './bootstrap';
 import $ from 'jquery';
 import 'jquery-pjax';
+import './announcement-modal';
 
 // Initialize PJAX
 $(document).pjax('a[data-pjax]', '#pjax-container', {
