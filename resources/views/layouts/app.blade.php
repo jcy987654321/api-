@@ -54,6 +54,9 @@
         </footer>
     </div>
 
+    <!-- Feedback Sidebar Widget -->
+    @include('feedback.sidebar-widget')
+
     <!-- Scripts -->
     @yield('scripts')
 </body>

@@ -10,6 +10,14 @@ A powerful management system built with Laravel 10+ and PHP 8.0+.
 - **Blade Templating**: Beautiful base layout with sections for customization
 - **Asset Management**: SCSS and JavaScript bundling with Vite
 - **Admin Dashboard**: Pre-built admin dashboard layout
+- **Feedback System**: End-to-end encrypted feedback submission and management
+  - Visitor feedback forms with QQ email validation
+  - Encrypted storage of sensitive data
+  - Admin interface for thread management
+  - Email notifications with secure thread links
+  - File attachment support with MIME validation
+  - Rate limiting and spam protection
+  - Complete audit logging
 
 ## Requirements
 
@@ -120,6 +128,23 @@ project/
 
 - `GET /` - Home page
 - `GET /admin/dashboard` - Admin dashboard (PJAX enabled)
+- `GET /feedback` - Feedback submission form
+- `POST /feedback` - Submit new feedback
+- `GET /feedback/thankyou` - Feedback confirmation page
+- `GET /feedback/thread/{token}` - View feedback thread (secure)
+- `POST /feedback/thread/{token}/reply` - Reply to feedback thread
+- `GET /feedback/attachment/{message}` - Download attachment
+
+### Admin Feedback Routes
+
+- `GET /admin/feedback` - Feedback management dashboard
+- `GET /admin/feedback/export` - Export feedback data (CSV)
+- `GET /admin/feedback/{thread}` - View and manage feedback thread
+- `POST /admin/feedback/{thread}/reply` - Send admin reply
+- `PUT /admin/feedback/{thread}/status` - Update thread status
+- `POST /admin/feedback/message/{message}/redact` - Redact message
+- `DELETE /admin/feedback/message/{message}` - Delete message
+- `DELETE /admin/feedback/{thread}` - Delete entire thread
 
 ### API Routes
 
@@ -152,6 +177,21 @@ QUEUE_CONNECTION=database
 
 # Cache
 CACHE_STORE=database
+
+# Feedback System Configuration
+FEEDBACK_ADMIN_EMAIL="admin@example.com"
+FEEDBACK_SUBMISSIONS_PER_HOUR=3
+FEEDBACK_REPLIES_PER_HOUR=5
+FEEDBACK_MAX_ATTACHMENT_SIZE=5120
+FEEDBACK_TOKEN_EXPIRY_DAYS=30
+FEEDBACK_SEND_ADMIN_NOTIFICATIONS=true
+FEEDBACK_SEND_VISITOR_CONFIRMATIONS=true
+FEEDBACK_SEND_ADMIN_REPLY_NOTIFICATIONS=true
+FEEDBACK_REQUIRE_CONSENT=true
+FEEDBACK_VALIDATE_QQ_EMAIL=true
+FEEDBACK_LOG_SUBMISSIONS=true
+FEEDBACK_LOG_IP_ADDRESSES=true
+FEEDBACK_ENABLE_SIDEBAR=true
 ```
 
 See `.env.example` for all available options.
