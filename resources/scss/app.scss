@@ -1,0 +1,246 @@
+// Import Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// Custom variables
+$primary-color: #3b82f6;
+$secondary-color: #6b7280;
+$danger-color: #ef4444;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+
+// Custom styles
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+a {
+    color: $primary-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+button, input[type="button"], input[type="submit"] {
+    cursor: pointer;
+}
+
+// Container
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+// PJAX container
+#pjax-container {
+    min-height: 400px;
+}
+
+// Custom component styles
+.stat-card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-left: 4px solid $primary-color;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    &.success {
+        border-left-color: $success-color;
+    }
+    
+    &.danger {
+        border-left-color: $danger-color;
+    }
+    
+    &.warning {
+        border-left-color: $warning-color;
+    }
+}
+
+.user-table {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    overflow: hidden;
+    
+    th {
+        background: #f9fafb;
+        font-weight: 600;
+        color: #374151;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    td {
+        border-bottom: 1px solid #f3f4f6;
+    }
+    
+    tr:hover {
+        background: #f9fafb;
+    }
+}
+
+.role-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    
+    &.admin {
+        background-color: #fef2f2;
+        color: #dc2626;
+    }
+    
+    &.manager {
+        background-color: #fef3c7;
+        color: #d97706;
+    }
+    
+    &.user {
+        background-color: #f0f9ff;
+        color: #0284c7;
+    }
+}
+
+.action-button {
+    padding: 0.25rem 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    
+    &.edit {
+        background-color: $primary-color;
+        color: white;
+    }
+    
+    &.delete {
+        background-color: $danger-color;
+        color: white;
+    }
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    
+    &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    
+    &.btn-primary {
+        background-color: $primary-color;
+        color: white;
+        
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+    }
+    
+    &.btn-success {
+        background-color: $success-color;
+        color: white;
+        
+        &:hover {
+            background-color: darken($success-color, 10%);
+        }
+    }
+    
+    &.btn-secondary {
+        background-color: #e5e7eb;
+        color: #1f2937;
+        
+        &:hover {
+            background-color: #d1d5db;
+        }
+    }
+}
+
+.alert {
+    padding: 0.75rem;
+    border-radius: 0.375rem;
+    margin-bottom: 1rem;
+    
+    &.alert-error {
+        background-color: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+    }
+    
+    &.alert-success {
+        background-color: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        color: #16a34a;
+    }
+}
+
+.chart-container {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    
+    h3 {
+        color: #1f2937;
+        margin-bottom: 1rem;
+    }
+}
