@@ -1,0 +1,19 @@
+{
+  "name": "api-management-system",
+  "version": "1.0.0",
+  "description": "强大的管理系统 - Powerful Management System",
+  "private": true,
+  "scripts": {
+    "sass": "sass resources/scss/public/styles.scss public/css/public.css",
+    "sass:watch": "sass --watch resources/scss/public/styles.scss public/css/public.css",
+    "sass:prod": "sass resources/scss/public/styles.scss public/css/public.css --style=compressed --no-source-map"
+  },
+  "keywords": [
+    "management",
+    "system",
+    "admin",
+    "dashboard"
+  ],
+  "author": "Development Team",
+  "license": "MIT"
+}
