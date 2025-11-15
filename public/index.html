@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Viewer</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <h1>API Viewer</h1>
+      <div class="header-actions">
+        <button id="back-home" class="btn secondary" type="button">Back Home</button>
+        <button id="run-sample" class="btn primary" type="button" disabled>Run Sample</button>
+        <button id="copy-curl" class="btn secondary" type="button" disabled>Copy cURL</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="catalog-view">
+        <h2>Available APIs</h2>
+        <div id="catalog-error" class="error hidden"></div>
+        <div id="catalog-loader" class="loader">Loading catalog…</div>
+        <ul id="catalog-list" class="catalog-list"></ul>
+      </section>
+
+      <section id="detail-view" class="hidden">
+        <div id="detail-loader" class="loader hidden">Loading API details…</div>
+        <div id="detail-error" class="error hidden"></div>
+        <article id="api-details" class="api-details hidden">
+          <header>
+            <h2 id="api-name"></h2>
+            <p id="api-summary" class="summary"></p>
+            <p id="api-status" class="status"></p>
+          </header>
+
+          <section class="metadata">
+            <h3>Metadata</h3>
+            <dl>
+              <div>
+                <dt>Endpoint</dt>
+                <dd id="api-endpoint"></dd>
+              </div>
+              <div>
+                <dt>Allowed Methods</dt>
+                <dd id="api-methods"></dd>
+              </div>
+              <div>
+                <dt>Category</dt>
+                <dd id="api-category"></dd>
+              </div>
+              <div>
+                <dt>Call Count</dt>
+                <dd id="api-call-count"></dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="parameters">
+            <h3>Parameters</h3>
+            <div id="parameter-groups"></div>
+          </section>
+
+          <section class="instructions">
+            <h3>Usage Instructions</h3>
+            <ol id="api-instructions"></ol>
+          </section>
+
+          <section class="tester">
+            <h3>Online Tester</h3>
+            <form id="tester-form">
+              <div class="form-field">
+                <label for="tester-method">Method</label>
+                <select id="tester-method" name="method"></select>
+              </div>
+              <div id="tester-parameters"></div>
+              <div id="tester-headers"></div>
+              <div class="form-actions">
+                <span id="tester-status" class="status-message"></span>
+                <button class="btn primary" type="submit" id="tester-submit">Run</button>
+              </div>
+            </form>
+
+            <div id="tester-error" class="error hidden"></div>
+            <div id="tester-loader" class="loader hidden">Executing request…</div>
+
+            <div id="response-preview" class="response hidden">
+              <h4>Response Preview</h4>
+              <div class="response-meta">
+                <span id="response-status"></span>
+                <span id="response-duration"></span>
+                <span id="response-size"></span>
+                <span id="response-content-type"></span>
+              </div>
+
+              <div class="tabs">
+                <button class="tab-button active" data-tab="json">JSON</button>
+                <button class="tab-button" data-tab="raw">Raw</button>
+                <button class="tab-button" data-tab="media">Media</button>
+              </div>
+              <div class="tab-content active" data-tab="json">
+                <pre><code id="response-json" class="language-json"></code></pre>
+              </div>
+              <div class="tab-content" data-tab="raw">
+                <pre><code id="response-raw"></code></pre>
+              </div>
+              <div class="tab-content" data-tab="media">
+                <div id="media-preview"></div>
+              </div>
+            </div>
+          </section>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/app.js" type="module"></script>
+</body>
+</html>
