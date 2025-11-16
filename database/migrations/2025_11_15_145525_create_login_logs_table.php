@@ -15,6 +15,17 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->enum('status', ['success', 'failure', 'blocked']);
             $table->text('failure_reason')->nullable();
+            $table->string('country', 2)->nullable();
+            $table->string('country_name')->nullable();
+            $table->string('city')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+            $table->string('device_type')->nullable();
+            $table->string('browser_name')->nullable();
+            $table->string('browser_version')->nullable();
+            $table->string('os_name')->nullable();
+            $table->string('os_version')->nullable();
+            $table->boolean('is_mobile')->default(false);
             $table->timestamps();
             
             $table->index(['user_id', 'created_at']);

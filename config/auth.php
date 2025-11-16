@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -111,5 +116,34 @@ return [
     */
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Login Throttle Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Settings for brute-force protection on admin login attempts.
+    |
+    */
+
+    'throttle' => [
+        'max_attempts' => env('AUTH_THROTTLE_MAX_ATTEMPTS', 5),
+        'lockout_duration' => env('AUTH_THROTTLE_LOCKOUT_DURATION', 30),
+        'reset_window' => env('AUTH_THROTTLE_RESET_WINDOW', 60),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Session Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Settings for admin session management.
+    |
+    */
+
+    'admin_session' => [
+        'timeout' => env('ADMIN_SESSION_TIMEOUT', 1800), // 30 minutes
+        'remember_duration' => env('ADMIN_SESSION_REMEMBER', 40320), // 28 days
+    ],
 
 ];

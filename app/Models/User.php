@@ -28,6 +28,13 @@ class User extends Authenticatable
         'bio',
         'avatar',
         'is_admin',
+        'otp_secret',
+        'otp_enabled',
+        'failed_login_attempts',
+        'account_locked_until',
+        'is_account_locked',
+        'password_changed_at',
+        'password_history',
     ];
 
     protected $hidden = [
@@ -42,6 +49,10 @@ class User extends Authenticatable
             'password' => 'hashed',
             'last_login_at' => 'datetime',
             'is_admin' => 'boolean',
+            'otp_enabled' => 'boolean',
+            'is_account_locked' => 'boolean',
+            'account_locked_until' => 'datetime',
+            'password_history' => 'array',
         ];
     }
 
@@ -58,6 +69,16 @@ class User extends Authenticatable
     public function loginLogs(): HasMany
     {
         return $this->hasMany(LoginLog::class);
+    }
+
+    public function adminSessions(): HasMany
+    {
+        return $this->hasMany(AdminSession::class);
+    }
+
+    public function loginThrottle()
+    {
+        return $this->hasOne(LoginThrottle::class);
     }
 
     public function feedbackThreads(): HasMany
@@ -100,5 +121,46 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->is_admin || $this->hasRole('admin');
+    }
+
+    public function isAccountLocked(): bool
+    {
+        if (!$this->is_account_locked) {
+            return false;
+        }
+
+        if ($this->account_locked_until && $this->account_locked_until->isPast()) {
+            $this->update(['is_account_locked' => false]);
+            return false;
+        }
+
+        return true;
+    }
+
+    public function lockAccount(int $minutes = 30): void
+    {
+        $this->update([
+            'is_account_locked' => true,
+            'account_locked_until' => now()->addMinutes($minutes),
+        ]);
+    }
+
+    public function unlockAccount(): void
+    {
+        $this->update([
+            'is_account_locked' => false,
+            'account_locked_until' => null,
+            'failed_login_attempts' => 0,
+        ]);
+    }
+
+    public function incrementFailedAttempts(): void
+    {
+        $this->increment('failed_login_attempts');
+    }
+
+    public function resetFailedAttempts(): void
+    {
+        $this->update(['failed_login_attempts' => 0]);
     }
 }

@@ -20,6 +20,17 @@ class LoginLog extends Model
         'user_agent',
         'status',
         'failure_reason',
+        'country',
+        'country_name',
+        'city',
+        'latitude',
+        'longitude',
+        'device_type',
+        'browser_name',
+        'browser_version',
+        'os_name',
+        'os_version',
+        'is_mobile',
     ];
 
     public function user(): BelongsTo
