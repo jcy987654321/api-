@@ -3,8 +3,12 @@ node_modules/
 vendor/
 
 # Build outputs
+public/build/
+public/hot
 public/css/*.map
 .sass-cache/
+dist/
+.vite/
 
 # Environment files
 .env

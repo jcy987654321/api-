@@ -17,7 +17,12 @@
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="{{ asset('css/public.css') }}">
+    
+    @if (file_exists(public_path('build/manifest.json')))
+        @vite(['resources/scss/public/styles.scss', 'resources/js/app.js'])
+    @else
+        <link rel="stylesheet" href="{{ asset('css/public.css') }}">
+    @endif
     
     @stack('styles')
     
@@ -216,9 +221,9 @@
     </div>
     
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js" integrity="sha512-NkWplMMN4gEHC0gPRMlD0XYLEkV9qFvpb8gSKIb9VJmLLlSmJqZJgLdw4SJiOVp0cLH1dT0rk/5xkN4FHqfLcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="{{ asset('js/public.js') }}"></script>
+    @if (!file_exists(public_path('build/manifest.json')))
+        <script src="{{ asset('js/public.js') }}"></script>
+    @endif
     
     @stack('scripts')
 </body>
