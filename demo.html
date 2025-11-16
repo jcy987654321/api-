@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="强大的管理系统 - Powerful Management System">
+    
+    <title>首页 - API System</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="public/css/public.css">
+    
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            const savedOverride = localStorage.getItem('themeOverride');
+            
+            if (savedOverride === 'true' && savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else {
+                const hour = new Date().getHours();
+                const autoTheme = (hour >= 6 && hour < 18) ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', autoTheme);
+            }
+        })();
+    </script>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <header class="site-header" role="banner">
+        <nav class="container navbar" role="navigation" aria-label="Main navigation">
+            <div class="navbar-brand">
+                <a href="demo.html" class="logo" data-pjax>
+                    <span class="logo-icon" aria-hidden="true">⚡</span>
+                    <span class="logo-text">API System</span>
+                </a>
+                
+                <button 
+                    type="button" 
+                    class="mobile-menu-toggle" 
+                    aria-expanded="false" 
+                    aria-controls="main-menu"
+                    aria-label="Toggle navigation menu"
+                >
+                    <span class="hamburger-icon" aria-hidden="true">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+            </div>
+            
+            <div class="navbar-menu" id="main-menu">
+                <ul class="nav-links" role="menubar">
+                    <li role="none">
+                        <a href="demo.html" class="nav-link active" data-pjax role="menuitem">
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="demo-features.html" class="nav-link" data-pjax role="menuitem">
+                            <span>功能</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#docs" class="nav-link" data-pjax role="menuitem">
+                            <span>文档</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#about" class="nav-link" data-pjax role="menuitem">
+                            <span>关于</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="#contact" class="nav-link" data-pjax role="menuitem">
+                            <span>联系</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <div class="navbar-actions">
+                    <button 
+                        type="button" 
+                        class="theme-toggle" 
+                        aria-label="Toggle theme"
+                        title="Toggle theme"
+                    >
+                        <span class="theme-icon theme-icon-light" aria-hidden="true">☀️</span>
+                        <span class="theme-icon theme-icon-dark" aria-hidden="true">🌙</span>
+                    </button>
+                    
+                    <a href="#login" class="btn btn-outline">登录</a>
+                    <a href="#register" class="btn btn-primary">注册</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <div id="pjax-container">
+        <section class="hero" role="region" aria-label="Hero section">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">强大的管理系统</h1>
+                    <p class="hero-subtitle">为您提供高效、安全的数据管理解决方案</p>
+                    <div class="hero-actions">
+                        <a href="#register" class="btn btn-primary btn-lg">开始使用</a>
+                        <a href="#docs" class="btn btn-outline btn-lg" data-pjax>了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <main id="main-content" class="main-content" role="main">
+            <div class="container">
+                <section class="features-section">
+                    <h2 class="section-title">核心功能</h2>
+                    <div class="features-grid">
+                        <article class="feature-card">
+                            <div class="feature-icon" aria-hidden="true">🚀</div>
+                            <h3 class="feature-title">高性能</h3>
+                            <p class="feature-description">优化的架构设计，确保系统运行快速稳定</p>
+                        </article>
+                        
+                        <article class="feature-card">
+                            <div class="feature-icon" aria-hidden="true">🔒</div>
+                            <h3 class="feature-title">安全可靠</h3>
+                            <p class="feature-description">多层安全防护，保护您的数据安全</p>
+                        </article>
+                        
+                        <article class="feature-card">
+                            <div class="feature-icon" aria-hidden="true">📊</div>
+                            <h3 class="feature-title">数据分析</h3>
+                            <p class="feature-description">强大的数据分析工具，助您做出明智决策</p>
+                        </article>
+                        
+                        <article class="feature-card">
+                            <div class="feature-icon" aria-hidden="true">🎨</div>
+                            <h3 class="feature-title">美观界面</h3>
+                            <p class="feature-description">现代化的用户界面，提供优质的使用体验</p>
+                        </article>
+                        
+                        <article class="feature-card">
+                            <div class="feature-icon" aria-hidden="true">📱</div>
+                            <h3 class="feature-title">响应式设计</h3>
+                            <p class="feature-description">完美适配各种设备，随时随地访问</p>
+                        </article>
+                        
+                        <article class="feature-card">
+                            <div class="feature-icon" aria-hidden="true">⚡</div>
+                            <h3 class="feature-title">快速部署</h3>
+                            <p class="feature-description">简单快捷的部署流程，快速上线</p>
+                        </article>
+                    </div>
+                </section>
+                
+                <section class="cta-section">
+                    <h2 class="cta-title">准备好开始了吗？</h2>
+                    <p class="cta-description">立即注册，体验强大的管理系统</p>
+                    <a href="#register" class="btn btn-primary btn-lg">免费开始</a>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3 class="footer-title">关于我们</h3>
+                    <p class="footer-description">
+                        强大的管理系统，为您提供高效、安全的数据管理解决方案。
+                    </p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features" data-pjax>功能特性</a></li>
+                        <li><a href="#docs" data-pjax>使用文档</a></li>
+                        <li><a href="#pricing" data-pjax>价格方案</a></li>
+                        <li><a href="#support" data-pjax>技术支持</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">法律信息</h3>
+                    <ul class="footer-links">
+                        <li><a href="#privacy" data-pjax>隐私政策</a></li>
+                        <li><a href="#terms" data-pjax>服务条款</a></li>
+                        <li><a href="#cookies" data-pjax>Cookie 政策</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">联系方式</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:info@example.com">info@example.com</a></li>
+                        <li><a href="tel:+861234567890">+86 123 456 7890</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="copyright">
+                    &copy; 2024 API System. All rights reserved.
+                </p>
+                <div class="social-links" role="navigation" aria-label="Social media links">
+                    <a href="#" aria-label="GitHub" class="social-link">GitHub</a>
+                    <a href="#" aria-label="Twitter" class="social-link">Twitter</a>
+                    <a href="#" aria-label="LinkedIn" class="social-link">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <div class="scroll-controls" role="navigation" aria-label="Page scroll controls">
+        <button 
+            type="button" 
+            class="scroll-btn scroll-top" 
+            aria-label="Scroll to top"
+            title="Scroll to top"
+            tabindex="0"
+        >
+            <span aria-hidden="true">↑</span>
+        </button>
+        <button 
+            type="button" 
+            class="scroll-btn scroll-bottom" 
+            aria-label="Scroll to bottom"
+            title="Scroll to bottom"
+            tabindex="0"
+        >
+            <span aria-hidden="true">↓</span>
+        </button>
+    </div>
+    
+    <div class="pjax-loader" role="status" aria-live="polite" aria-label="Loading content">
+        <div class="loader-spinner" aria-hidden="true"></div>
+        <span class="sr-only">Loading...</span>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js" integrity="sha512-NkWplMMN4gEHC0gPRMlD0XYLEkV9qFvpb8gSKIb9VJmLLlSmJqZJgLdw4SJiOVp0cLH1dT0rk/5xkN4FHqfLcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="public/js/public.js"></script>
+</body>
+</html>

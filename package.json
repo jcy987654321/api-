@@ -1,0 +1,44 @@
+{
+  "name": "api-management-system",
+  "version": "1.0.0",
+  "description": "强大的管理系统 - Powerful Management System",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lighthouse": "lighthouse http://localhost:8000 --view --preset=desktop",
+    "lighthouse:mobile": "lighthouse http://localhost:8000 --view",
+    "sass": "sass resources/scss/public/styles.scss public/css/public.css",
+    "sass:watch": "sass --watch resources/scss/public/styles.scss public/css/public.css",
+    "sass:prod": "sass resources/scss/public/styles.scss public/css/public.css --style=compressed --no-source-map"
+  },
+  "keywords": [
+    "management",
+    "system",
+    "admin",
+    "dashboard"
+  ],
+  "author": "Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^5.4.2",
+    "autoprefixer": "^10.4.20",
+    "laravel-vite-plugin": "^1.0.5",
+    "lighthouse": "^12.2.1",
+    "postcss": "^8.4.47",
+    "sass": "^1.77.8",
+    "vite": "^5.4.8",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-imagemin": "^0.6.1"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.4",
+    "core-js": "^3.38.1",
+    "jquery": "^3.7.1",
+    "jquery-pjax": "^2.0.1",
+    "prismjs": "^1.29.0",
+    "regenerator-runtime": "^0.14.1"
+  }
+}
