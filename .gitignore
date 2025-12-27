@@ -1,0 +1,33 @@
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+/vendor/
+composer.lock
+.env
+.env.*
+
+!.env.example
+
+# Laravel
+storage/data/
+storage/framework/
+storage/logs/
+bootstrap/cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Testing
+.phpunit.cache
+coverage/
