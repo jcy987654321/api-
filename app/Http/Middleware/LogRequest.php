@@ -4,8 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class LogRequest
 {
@@ -34,9 +34,9 @@ class LogRequest
         // Don't log if it's a binary response
         $contentType = $response->headers->get('Content-Type');
         if ($contentType && (
-            str_contains($contentType, 'image/') || 
-            str_contains($contentType, 'video/') || 
-            str_contains($contentType, 'audio/') || 
+            str_contains($contentType, 'image/') ||
+            str_contains($contentType, 'video/') ||
+            str_contains($contentType, 'audio/') ||
             str_contains($contentType, 'application/pdf') ||
             str_contains($contentType, 'application/octet-stream') ||
             str_contains($contentType, 'application/zip')
@@ -60,7 +60,7 @@ class LogRequest
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
             'status_code' => $response->getStatusCode(),
-            'duration' => round($duration * 1000, 2) . 'ms',
+            'duration' => round($duration * 1000, 2).'ms',
             'user_id' => $request->user()?->id,
             'request_payload' => $this->maskSensitiveData($request->except(['_token', '_method'])),
         ];
@@ -77,6 +77,7 @@ class LogRequest
                 $data[$key] = $this->maskSensitiveData($value);
             }
         }
+
         return $data;
     }
 }

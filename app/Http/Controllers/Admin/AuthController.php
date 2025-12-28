@@ -17,9 +17,9 @@ class AuthController extends Controller
         // Login logic will be implemented here
         \Illuminate\Support\Facades\Log::channel('security')->info('Admin login attempt', [
             'email' => $request->get('email'),
-            'ip' => $request->ip()
+            'ip' => $request->ip(),
         ]);
-        
+
         return redirect()->route('admin.dashboard');
     }
 
@@ -28,9 +28,9 @@ class AuthController extends Controller
         // Logout logic will be implemented here
         \Illuminate\Support\Facades\Log::channel('security')->info('Admin logout', [
             'user_id' => $request->user()?->id,
-            'ip' => $request->ip()
+            'ip' => $request->ip(),
         ]);
-        
+
         return redirect()->route('admin.login');
     }
 }

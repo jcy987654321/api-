@@ -18,6 +18,7 @@ class LogController extends Controller
     public function index()
     {
         $stats = $this->logService->getStats();
+
         return view('admin.logs.index', compact('stats'));
     }
 
@@ -26,7 +27,7 @@ class LogController extends Controller
         $page = $request->get('page', 1);
         $level = $request->get('level');
         $keyword = $request->get('keyword');
-        
+
         $logs = $this->logService->searchLogs($channel, $date, $level, $keyword, $page);
         $stats = $this->logService->getStats();
 
@@ -37,7 +38,7 @@ class LogController extends Controller
     {
         $days = $request->get('days', 30);
         $deleted = $this->logService->clearOldLogs($days);
-        
+
         return back()->with('success', "Cleared $deleted old log files.");
     }
 }

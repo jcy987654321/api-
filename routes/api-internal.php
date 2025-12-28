@@ -9,6 +9,6 @@ use Illuminate\Support\Facades\Route;
 | These routes are for internal system management APIs
 */
 
-Route::middleware(['api'])->prefix('api/internal')->group(function () {
+Route::prefix('internal')->group(function () {
     // Internal API Routes will be defined here
 });

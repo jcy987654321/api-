@@ -8,7 +8,7 @@ class AuthenticationException extends Exception
 {
     protected $statusCode;
 
-    public function __construct(string $message = "Unauthenticated", int $statusCode = 401)
+    public function __construct(string $message = 'Unauthenticated', int $statusCode = 401)
     {
         parent::__construct($message);
         $this->statusCode = $statusCode;

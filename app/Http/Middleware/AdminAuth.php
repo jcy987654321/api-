@@ -17,7 +17,7 @@ class AdminAuth
     {
         // Check if user is authenticated and is admin
         // This is a placeholder - actual authentication logic will be implemented
-        if (!$request->user() || !$request->user()->isAdmin) {
+        if (! $request->user() || ! $request->user()->isAdmin) {
             return redirect()->route('admin.login');
         }
 

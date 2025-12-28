@@ -7,9 +7,10 @@ use Exception;
 class ValidationException extends Exception
 {
     protected $errors;
+
     protected $statusCode;
 
-    public function __construct(string $message = "Validation failed", array $errors = [], int $statusCode = 422)
+    public function __construct(string $message = 'Validation failed', array $errors = [], int $statusCode = 422)
     {
         parent::__construct($message);
         $this->errors = $errors;

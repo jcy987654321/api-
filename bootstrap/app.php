@@ -68,7 +68,7 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'message' => $message,
                     'code' => $code,
-                    'errors' => (object)$errors,
+                    'errors' => (object) $errors,
                 ], $statusCode);
             }
         });
