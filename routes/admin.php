@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ApiManageController;
 use App\Http\Controllers\Admin\BlogManageController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +17,18 @@ use App\Http\Controllers\Admin\SettingsController;
 
 Route::middleware(['web'])->prefix('admin')->group(function () {
     // Authentication routes (no auth middleware)
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AuthController::class, 'login'])->name('admin.login.post');
+    Route::get('/login', [AuthController::class, 'login'])->name('admin.login');
+    Route::post('/login', [AuthController::class, 'authenticate'])->name('admin.login.post');
     
     // Protected admin routes with AdminAuth middleware
     Route::middleware(['admin.auth'])->group(function () {
         Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
+
+        // Profile
+        Route::get('/profile', [ProfileController::class, 'show'])->name('admin.profile');
+        Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('admin.profile.update');
+        Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('admin.password.change');
+        Route::post('/change-password', [ProfileController::class, 'updatePassword'])->name('admin.password.update');
         
         // Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
