@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminAuth
@@ -15,7 +16,22 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->session()->get('admin.authenticated') !== true) {
+        if (! Auth::guard('admin')->check()) {
+            $request->session()->put('url.intended', $request->fullUrl());
+
+            return redirect()->route('admin.login');
+        }
+
+        /** @var \App\Models\User $user */
+        $user = Auth::guard('admin')->user();
+
+        if (! $user->isAdmin() || ! $user->isActive()) {
+            Auth::guard('admin')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            $request->session()->put('url.intended', $request->fullUrl());
+
             return redirect()->route('admin.login');
         }
 
