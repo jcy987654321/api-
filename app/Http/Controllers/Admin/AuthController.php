@@ -14,23 +14,34 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Login logic will be implemented here
-        \Illuminate\Support\Facades\Log::channel('security')->info('Admin login attempt', [
-            'email' => $request->get('email'),
-            'ip' => $request->ip()
+        $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
-        
+
+        $request->session()->regenerate();
+        $request->session()->put('admin.authenticated', true);
+        $request->session()->put('admin.email', $request->string('email')->toString());
+
+        \Illuminate\Support\Facades\Log::channel('security')->info('Admin login', [
+            'email' => $request->get('email'),
+            'ip' => $request->ip(),
+        ]);
+
         return redirect()->route('admin.dashboard');
     }
 
     public function logout(Request $request)
     {
-        // Logout logic will be implemented here
         \Illuminate\Support\Facades\Log::channel('security')->info('Admin logout', [
-            'user_id' => $request->user()?->id,
-            'ip' => $request->ip()
+            'email' => $request->session()->get('admin.email'),
+            'ip' => $request->ip(),
         ]);
-        
+
+        $request->session()->forget(['admin.authenticated', 'admin.email']);
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('admin.login');
     }
 }

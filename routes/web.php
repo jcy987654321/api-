@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\ApiController;
+use App\Http\Controllers\Admin\RealtimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,11 @@ Route::get('/api-test', [ApiController::class, 'test'])->name('api.test');
 // About and Contact routes
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+
+// Realtime SSE stream (protected)
+Route::get('/api-internal/realtime/stream', [RealtimeController::class, 'stream'])
+    ->middleware('admin.auth')
+    ->name('admin.realtime.stream');
 
 // Include admin routes
 require __DIR__.'/admin.php';
