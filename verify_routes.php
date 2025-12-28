@@ -8,9 +8,9 @@ echo "=== Route Structure Verification ===\n\n";
 echo "1. Route Files:\n";
 $routeFiles = [
     'routes/web.php',
-    'routes/admin.php', 
+    'routes/admin.php',
     'routes/api.php',
-    'routes/api-internal.php'
+    'routes/api-internal.php',
 ];
 
 foreach ($routeFiles as $file) {
@@ -25,13 +25,13 @@ echo "\n2. Controller Files:\n";
 $controllers = [
     'app/Http/Controllers/Controller.php',
     'app/Http/Controllers/Front/HomeController.php',
-    'app/Http/Controllers/Front/BlogController.php', 
+    'app/Http/Controllers/Front/BlogController.php',
     'app/Http/Controllers/Front/ApiController.php',
     'app/Http/Controllers/Admin/AuthController.php',
     'app/Http/Controllers/Admin/DashboardController.php',
     'app/Http/Controllers/Admin/ApiManageController.php',
     'app/Http/Controllers/Admin/BlogManageController.php',
-    'app/Http/Controllers/Admin/SettingsController.php'
+    'app/Http/Controllers/Admin/SettingsController.php',
 ];
 
 foreach ($controllers as $controller) {
@@ -46,7 +46,7 @@ echo "\n3. Middleware Files:\n";
 $middleware = [
     'app/Http/Middleware/AdminAuth.php',
     'app/Http/Middleware/LogRequest.php',
-    'app/Http/Middleware/ApiCorsMiddleware.php'
+    'app/Http/Middleware/ApiCorsMiddleware.php',
 ];
 
 foreach ($middleware as $mw) {
@@ -70,7 +70,7 @@ $views = [
     'resources/views/pages/apis/show.blade.php',
     'resources/views/pages/api-test.blade.php',
     'resources/views/admin/login.blade.php',
-    'resources/views/admin/dashboard.blade.php'
+    'resources/views/admin/dashboard.blade.php',
 ];
 
 foreach ($views as $view) {

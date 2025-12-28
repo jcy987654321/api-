@@ -36,13 +36,13 @@ class AppServiceProvider extends ServiceProvider
 
                 \Illuminate\Support\Facades\Log::channel('database')->info('SQL Query', [
                     'sql' => $sql,
-                    'time' => $time . 'ms',
+                    'time' => $time.'ms',
                 ]);
 
                 if ($time > 1000) {
                     \Illuminate\Support\Facades\Log::channel('database')->warning('Slow Query Detected', [
                         'sql' => $sql,
-                        'time' => $time . 'ms',
+                        'time' => $time.'ms',
                     ]);
                 }
             });

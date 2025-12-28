@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
 
 class LogService extends BaseService
 {
@@ -26,12 +26,12 @@ class LogService extends BaseService
                 $size = $file->getSize();
                 $stats['total_size'] += $size;
                 $stats['file_count']++;
-                
+
                 $filename = $file->getFilename();
                 $parts = explode('-', $filename);
                 $channel = $parts[0];
-                
-                if (!isset($stats['channels'][$channel])) {
+
+                if (! isset($stats['channels'][$channel])) {
                     $stats['channels'][$channel] = [
                         'count' => 0,
                         'size' => 0,
@@ -72,22 +72,23 @@ class LogService extends BaseService
         }
 
         Log::info("Cleared $deletedCount log files older than $days days.");
+
         return $deletedCount;
     }
 
     /**
      * Search logs (Simplified implementation)
      */
-    public function searchLogs(string $channel = 'laravel', string $date = null, string $level = null, string $keyword = null, int $page = 1, int $perPage = 50): array
+    public function searchLogs(string $channel = 'laravel', ?string $date = null, ?string $level = null, ?string $keyword = null, int $page = 1, int $perPage = 50): array
     {
         $date = $date ?: date('Y-m-d');
         $filename = "{$channel}-{$date}.log";
         $filePath = storage_path("logs/{$filename}");
 
-        if (!File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             // Try without date if it's the main log file (though we configured daily)
             $filePath = storage_path("logs/{$channel}.log");
-            if (!File::exists($filePath)) {
+            if (! File::exists($filePath)) {
                 return ['data' => [], 'total' => 0];
             }
         }
@@ -97,7 +98,9 @@ class LogService extends BaseService
         $results = [];
 
         foreach ($lines as $line) {
-            if (empty(trim($line))) continue;
+            if (empty(trim($line))) {
+                continue;
+            }
 
             // Simple parsing of Laravel log format: [timestamp] environment.LEVEL: message {"context":...}
             if (preg_match('/^\[(?P<timestamp>.*)\] (?P<env>\w+)\.(?P<level>\w+): (?P<message>.*)/', $line, $matches)) {
@@ -107,14 +110,18 @@ class LogService extends BaseService
                     'message' => $matches['message'],
                 ];
 
-                if ($level && strtolower($level) !== $entry['level']) continue;
-                if ($keyword && !str_contains(strtolower($line), strtolower($keyword))) continue;
+                if ($level && strtolower($level) !== $entry['level']) {
+                    continue;
+                }
+                if ($keyword && ! str_contains(strtolower($line), strtolower($keyword))) {
+                    continue;
+                }
 
                 $results[] = $entry;
             } else {
                 // Handle multi-line entries (stack traces) by appending to the last entry
-                if (!empty($results)) {
-                    $results[count($results) - 1]['message'] .= "\n" . $line;
+                if (! empty($results)) {
+                    $results[count($results) - 1]['message'] .= "\n".$line;
                 }
             }
         }
@@ -142,6 +149,6 @@ class LogService extends BaseService
         $pow = min($pow, count($units) - 1);
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return round($bytes, $precision).' '.$units[$pow];
     }
 }

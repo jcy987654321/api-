@@ -8,7 +8,7 @@ class AuthorizationException extends Exception
 {
     protected $statusCode;
 
-    public function __construct(string $message = "This action is unauthorized.", int $statusCode = 403)
+    public function __construct(string $message = 'This action is unauthorized.', int $statusCode = 403)
     {
         parent::__construct($message);
         $this->statusCode = $statusCode;
