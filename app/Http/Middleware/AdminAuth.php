@@ -15,9 +15,7 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Check if user is authenticated and is admin
-        // This is a placeholder - actual authentication logic will be implemented
-        if (!$request->user() || !$request->user()->isAdmin) {
+        if ($request->session()->get('admin.authenticated') !== true) {
             return redirect()->route('admin.login');
         }
 
