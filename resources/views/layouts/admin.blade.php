@@ -67,6 +67,7 @@
                 <li><a href="/admin/plugins" class="{{ Request::is('admin/plugins*') ? 'active' : '' }}">Plugins</a></li>
                 <li><a href="/admin/statistics" class="{{ Request::is('admin/statistics*') ? 'active' : '' }}">Statistics</a></li>
                 <li><a href="/admin/links" class="{{ Request::is('admin/links*') ? 'active' : '' }}">Links</a></li>
+                <li><a href="/admin/logs" class="{{ Request::is('admin/logs*') ? 'active' : '' }}">System Logs</a></li>
             </ul>
         </div>
         

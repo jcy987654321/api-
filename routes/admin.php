@@ -66,5 +66,12 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         Route::prefix('links')->group(function () {
             Route::get('/', [SettingsController::class, 'links'])->name('admin.links.index');
         });
+
+        // Log Management routes
+        Route::prefix('logs')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\LogController::class, 'index'])->name('admin.logs.index');
+            Route::get('/view/{channel}/{date?}', [\App\Http\Controllers\Admin\LogController::class, 'view'])->name('admin.logs.view');
+            Route::post('/clear', [\App\Http\Controllers\Admin\LogController::class, 'clear'])->name('admin.logs.clear');
+        });
     });
 });
