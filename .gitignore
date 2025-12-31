@@ -15,6 +15,10 @@ storage/framework/
 storage/logs/
 bootstrap/cache/
 
+# Vite
+public/build/
+public/hot/
+
 # IDE
 .idea/
 .vscode/
