@@ -29,9 +29,18 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('admin.profile.update');
         Route::get('/change-password', [ProfileController::class, 'changePassword'])->name('admin.password.change');
         Route::post('/change-password', [ProfileController::class, 'updatePassword'])->name('admin.password.update');
-        
+
+        // Settings (profile link)
+        Route::get('/settings/profile', [ProfileController::class, 'show'])->name('admin.settings.profile');
+
         // Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+        // Real-time stream for dashboard
+        Route::get('/realtime/stream', [DashboardController::class, 'realtimeStream'])->name('admin.realtime.stream');
+
+        // Search
+        Route::get('/search', [DashboardController::class, 'search'])->name('admin.search');
         
         // API Management routes
         Route::prefix('apis')->group(function () {
@@ -41,6 +50,26 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             Route::get('/{id}/edit', [ApiManageController::class, 'edit'])->name('admin.apis.edit');
             Route::put('/{id}', [ApiManageController::class, 'update'])->name('admin.apis.update');
             Route::delete('/{id}', [ApiManageController::class, 'destroy'])->name('admin.apis.destroy');
+
+            // API Categories
+            Route::prefix('categories')->group(function () {
+                Route::get('/', [ApiManageController::class, 'categories'])->name('admin.api-categories.index');
+                Route::get('/create', [ApiManageController::class, 'createCategory'])->name('admin.api-categories.create');
+                Route::post('/', [ApiManageController::class, 'storeCategory'])->name('admin.api-categories.store');
+                Route::get('/{id}/edit', [ApiManageController::class, 'editCategory'])->name('admin.api-categories.edit');
+                Route::put('/{id}', [ApiManageController::class, 'updateCategory'])->name('admin.api-categories.update');
+                Route::delete('/{id}', [ApiManageController::class, 'destroyCategory'])->name('admin.api-categories.destroy');
+            });
+
+            // API Parameters
+            Route::prefix('parameters')->group(function () {
+                Route::get('/', [ApiManageController::class, 'parameters'])->name('admin.api-params.index');
+                Route::get('/create', [ApiManageController::class, 'createParameter'])->name('admin.api-params.create');
+                Route::post('/', [ApiManageController::class, 'storeParameter'])->name('admin.api-params.store');
+                Route::get('/{id}/edit', [ApiManageController::class, 'editParameter'])->name('admin.api-params.edit');
+                Route::put('/{id}', [ApiManageController::class, 'updateParameter'])->name('admin.api-params.update');
+                Route::delete('/{id}', [ApiManageController::class, 'destroyParameter'])->name('admin.api-params.destroy');
+            });
         });
         
         // Blog Management routes
@@ -51,6 +80,26 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             Route::get('/{id}/edit', [BlogManageController::class, 'edit'])->name('admin.blogs.edit');
             Route::put('/{id}', [BlogManageController::class, 'update'])->name('admin.blogs.update');
             Route::delete('/{id}', [BlogManageController::class, 'destroy'])->name('admin.blogs.destroy');
+
+            // Blog Categories
+            Route::prefix('categories')->group(function () {
+                Route::get('/', [BlogManageController::class, 'categories'])->name('admin.blog-categories.index');
+                Route::get('/create', [BlogManageController::class, 'createCategory'])->name('admin.blog-categories.create');
+                Route::post('/', [BlogManageController::class, 'storeCategory'])->name('admin.blog-categories.store');
+                Route::get('/{id}/edit', [BlogManageController::class, 'editCategory'])->name('admin.blog-categories.edit');
+                Route::put('/{id}', [BlogManageController::class, 'updateCategory'])->name('admin.blog-categories.update');
+                Route::delete('/{id}', [BlogManageController::class, 'destroyCategory'])->name('admin.blog-categories.destroy');
+            });
+
+            // Blog Tags
+            Route::prefix('tags')->group(function () {
+                Route::get('/', [BlogManageController::class, 'tags'])->name('admin.blog-tags.index');
+                Route::get('/create', [BlogManageController::class, 'createTag'])->name('admin.blog-tags.create');
+                Route::post('/', [BlogManageController::class, 'storeTag'])->name('admin.blog-tags.store');
+                Route::get('/{id}/edit', [BlogManageController::class, 'editTag'])->name('admin.blog-tags.edit');
+                Route::put('/{id}', [BlogManageController::class, 'updateTag'])->name('admin.blog-tags.update');
+                Route::delete('/{id}', [BlogManageController::class, 'destroyTag'])->name('admin.blog-tags.destroy');
+            });
         });
         
         // Settings routes
@@ -62,11 +111,14 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         // Plugins routes
         Route::prefix('plugins')->group(function () {
             Route::get('/', [SettingsController::class, 'plugins'])->name('admin.plugins.index');
+            Route::get('/settings', [SettingsController::class, 'pluginSettings'])->name('admin.plugins.settings');
         });
-        
+
         // Statistics routes
         Route::prefix('statistics')->group(function () {
-            Route::get('/', [SettingsController::class, 'statistics'])->name('admin.statistics.index');
+            Route::get('/access', [SettingsController::class, 'accessStatistics'])->name('admin.statistics.access');
+            Route::get('/api', [SettingsController::class, 'apiStatistics'])->name('admin.statistics.api');
+            Route::get('/users', [SettingsController::class, 'userStatistics'])->name('admin.statistics.users');
         });
         
         // Links routes
