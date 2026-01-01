@@ -1,26 +1,36 @@
 @extends('layouts.app')
 
-@section('title', 'Blog - Our Blog')
+@section('title', 'Search: ' . $search)
 
 @section('content')
 <div class="row">
     <div class="col-lg-8">
         <div class="mb-4">
             <form action="{{ route('blog.search') }}" method="GET" class="d-flex gap-2">
-                <input type="text" name="q" class="form-control" placeholder="Search articles..." value="{{ request('q') }}">
+                <input type="text" name="q" class="form-control" placeholder="Search articles..." value="{{ $search }}">
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                 </button>
             </form>
         </div>
 
+        <h2 class="mb-4">
+            Search Results for "{{ $search }}"
+            <small class="text-muted fs-6">({{ $blogs->total() }} results found)</small>
+        </h2>
+
         @if($blogs->isEmpty())
             <div class="text-center py-5">
-                <i class="bi bi-journal-text fs-1 text-muted"></i>
-                <p class="mt-3 text-muted">No articles found.</p>
-                @if(request('q'))
-                    <p>Try different keywords or <a href="{{ route('blog.index') }}">view all articles</a></p>
-                @endif
+                <i class="bi bi-search fs-1 text-muted"></i>
+                <p class="mt-3 text-muted">No articles found matching your search.</p>
+                <div class="mt-4">
+                    <p>Suggestions:</p>
+                    <ul class="list-unstyled text-muted">
+                        <li>Check your spelling</li>
+                        <li>Try different keywords</li>
+                        <li>Use more general terms</li>
+                    </ul>
+                </div>
             </div>
         @else
             @foreach($blogs as $blog)
@@ -39,6 +49,16 @@
                             <span class="me-3">
                                 <i class="bi bi-folder"></i> 
                                 <a href="{{ route('blog.category', $blog->category->slug) }}">{{ $blog->category->name }}</a>
+                            </span>
+                        @endif
+                        @if($blog->tags->isNotEmpty())
+                            <span class="me-3">
+                                <i class="bi bi-tags"></i>
+                                @foreach($blog->tags as $tag)
+                                    <a href="{{ route('blog.tag', $tag->slug) }}" class="badge bg-light text-dark text-decoration-none">
+                                        {{ $tag->name }}
+                                    </a>
+                                @endforeach
                             </span>
                         @endif
                         <span>

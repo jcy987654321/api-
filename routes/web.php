@@ -31,6 +31,9 @@ Route::middleware(['user.auth'])->group(function () {
 // Blog routes
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('/blog/category/{slug}', [BlogController::class, 'category'])->name('blog.category');
+Route::get('/blog/tag/{slug}', [BlogController::class, 'tag'])->name('blog.tag');
+Route::get('/blog/search', [BlogController::class, 'search'])->name('blog.search');
 
 // API routes
 Route::get('/apis', [ApiController::class, 'index'])->name('apis.index');
