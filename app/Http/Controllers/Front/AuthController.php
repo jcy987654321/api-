@@ -74,9 +74,4 @@ class AuthController extends Controller
 
         return redirect('/')->with('success', '您已成功退出登录。');
     }
-
-    public function profile()
-    {
-        return view('pages.profile', ['user' => Auth::user()]);
-    }
 }
