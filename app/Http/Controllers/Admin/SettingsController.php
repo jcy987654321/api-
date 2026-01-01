@@ -3,33 +3,31 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    public function index()
-    {
-        return view('admin.settings.index');
-    }
-
-    public function update(Request $request)
-    {
-        // Update logic will be implemented here
-        return redirect()->route('admin.settings.index');
-    }
-
     public function plugins()
     {
         return view('admin.plugins.index');
     }
 
-    public function statistics()
+    public function pluginSettings()
     {
-        return view('admin.statistics.index');
+        return view('admin.plugins.settings');
     }
 
-    public function links()
+    public function accessStatistics()
     {
-        return view('admin.links.index');
+        return view('admin.statistics.access');
+    }
+
+    public function apiStatistics()
+    {
+        return view('admin.statistics.api');
+    }
+
+    public function userStatistics()
+    {
+        return view('admin.statistics.users');
     }
 }

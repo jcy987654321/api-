@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\ApiController;
 use App\Http\Controllers\Front\AuthController;
+use App\Http\Controllers\Front\LinkController;
 use App\Http\Controllers\Front\UserProfileController;
 use App\Http\Controllers\Admin\RealtimeController;
 
@@ -66,6 +67,12 @@ Route::get('/api-test', [ApiController::class, 'test'])->name('api.test');
 // About and Contact routes
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+
+// Friend links
+Route::get('/links', [LinkController::class, 'index'])->name('links.index');
+Route::post('/links', [LinkController::class, 'store'])->name('links.store');
+Route::post('/links/{id}/click', [LinkController::class, 'click'])->whereNumber('id')->name('links.click');
+Route::get('/links/{category}', [LinkController::class, 'getByCategory'])->name('links.category');
 
 // Realtime SSE stream (protected)
 Route::get('/api-internal/realtime/stream', [RealtimeController::class, 'stream'])
