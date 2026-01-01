@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Traits\HasAvatar;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasAvatar;
 
     public const ROLE_ADMIN = 'admin';
     public const ROLE_USER = 'user';
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'avatar',
+        'bio',
         'status',
         'role',
         'is_active',

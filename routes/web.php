@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\ApiController;
 use App\Http\Controllers\Front\AuthController;
+use App\Http\Controllers\Front\UserProfileController;
 use App\Http\Controllers\Admin\RealtimeController;
 
 /*
@@ -25,7 +26,18 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['user.auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    
+    // User profile routes
+    Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
+    Route::prefix('user/profile')->name('user.profile.')->group(function () {
+        Route::get('/edit', [UserProfileController::class, 'edit'])->name('edit');
+        Route::put('/', [UserProfileController::class, 'update'])->name('update');
+        Route::get('/password', [UserProfileController::class, 'showChangePassword'])->name('password.show');
+        Route::put('/password', [UserProfileController::class, 'changePassword'])->name('password.update');
+        Route::get('/avatar', [UserProfileController::class, 'showUploadAvatar'])->name('avatar.show');
+        Route::post('/avatar', [UserProfileController::class, 'uploadAvatar'])->name('avatar.update');
+        Route::delete('/avatar', [UserProfileController::class, 'deleteAvatar'])->name('avatar.destroy');
+    });
     
     // API key routes
     Route::prefix('user/api-keys')->name('user.api-keys.')->group(function () {
