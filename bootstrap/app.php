@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->append(\App\Http\Middleware\LogRequest::class);
         $middleware->alias([
             'admin.auth' => \App\Http\Middleware\AdminAuth::class,
+            'user.auth' => \App\Http\Middleware\UserAuth::class,
             'log.request' => \App\Http\Middleware\LogRequest::class,
             'api.cors' => \App\Http\Middleware\ApiCorsMiddleware::class,
         ]);

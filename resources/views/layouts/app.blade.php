@@ -55,6 +55,16 @@
                     <a href="/apis">APIs</a>
                     <a href="/about">About</a>
                     <a href="/contact">Contact</a>
+                    @auth
+                        <a href="/profile">Profile</a>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    @else
+                        <a href="/login">Login</a>
+                        <a href="/register">Register</a>
+                    @endauth
                 </div>
             </nav>
         </div>

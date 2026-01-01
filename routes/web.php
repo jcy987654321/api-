@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\BlogController;
 use App\Http\Controllers\Front\ApiController;
+use App\Http\Controllers\Front\AuthController;
 use App\Http\Controllers\Admin\RealtimeController;
 
 /*
@@ -15,6 +16,17 @@ use App\Http\Controllers\Admin\RealtimeController;
 
 // Home routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Auth routes
+Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware(['user.auth'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+});
 
 // Blog routes
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
