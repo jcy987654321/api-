@@ -80,6 +80,8 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             Route::get('/{id}/edit', [BlogManageController::class, 'edit'])->name('admin.blogs.edit');
             Route::put('/{id}', [BlogManageController::class, 'update'])->name('admin.blogs.update');
             Route::delete('/{id}', [BlogManageController::class, 'destroy'])->name('admin.blogs.destroy');
+            Route::post('/{id}/publish', [BlogManageController::class, 'publish'])->name('admin.blogs.publish');
+            Route::post('/{id}/draft', [BlogManageController::class, 'draft'])->name('admin.blogs.draft');
 
             // Blog Categories
             Route::prefix('categories')->group(function () {

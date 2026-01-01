@@ -1,26 +1,29 @@
 @extends('layouts.app')
 
-@section('title', 'Blog - Our Blog')
+@section('title', 'Category: ' . $category->name)
 
 @section('content')
 <div class="row">
     <div class="col-lg-8">
-        <div class="mb-4">
-            <form action="{{ route('blog.search') }}" method="GET" class="d-flex gap-2">
-                <input type="text" name="q" class="form-control" placeholder="Search articles..." value="{{ request('q') }}">
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-search"></i>
-                </button>
-            </form>
-        </div>
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('blog.index') }}">Blog</a></li>
+                <li class="breadcrumb-item active">{{ $category->name }}</li>
+            </ol>
+        </nav>
+
+        <h2 class="mb-4">Category: {{ $category->name }}</h2>
+
+        @if($category->description)
+            <p class="text-muted mb-4">{{ $category->description }}</p>
+        @endif
 
         @if($blogs->isEmpty())
             <div class="text-center py-5">
                 <i class="bi bi-journal-text fs-1 text-muted"></i>
-                <p class="mt-3 text-muted">No articles found.</p>
-                @if(request('q'))
-                    <p>Try different keywords or <a href="{{ route('blog.index') }}">view all articles</a></p>
-                @endif
+                <p class="mt-3 text-muted">No articles found in this category.</p>
+                <a href="{{ route('blog.index') }}" class="btn btn-primary">View All Articles</a>
             </div>
         @else
             @foreach($blogs as $blog)
@@ -35,10 +38,14 @@
                         <span class="me-3">
                             <i class="bi bi-calendar"></i> {{ $blog->created_at->format('M d, Y') }}
                         </span>
-                        @if($blog->category)
+                        @if($blog->tags->isNotEmpty())
                             <span class="me-3">
-                                <i class="bi bi-folder"></i> 
-                                <a href="{{ route('blog.category', $blog->category->slug) }}">{{ $blog->category->name }}</a>
+                                <i class="bi bi-tags"></i>
+                                @foreach($blog->tags as $tag)
+                                    <a href="{{ route('blog.tag', $tag->slug) }}" class="badge bg-light text-dark text-decoration-none">
+                                        {{ $tag->name }}
+                                    </a>
+                                @endforeach
                             </span>
                         @endif
                         <span>
@@ -67,11 +74,11 @@
             </div>
             <div class="card-body">
                 <ul class="list-unstyled mb-0">
-                    @foreach($categories as $category)
+                    @foreach($categories as $cat)
                         <li class="mb-2">
-                            <a href="{{ route('blog.category', $category->slug) }}" class="text-decoration-none d-flex justify-content-between align-items-center">
-                                <span>{{ $category->name }}</span>
-                                <span class="badge bg-secondary">{{ $category->blogs_count }}</span>
+                            <a href="{{ route('blog.category', $cat->slug) }}" class="text-decoration-none d-flex justify-content-between align-items-center {{ $cat->id === $category->id ? 'fw-bold' : '' }}">
+                                <span>{{ $cat->name }}</span>
+                                <span class="badge bg-secondary">{{ $cat->blogs_count }}</span>
                             </a>
                         </li>
                     @endforeach
