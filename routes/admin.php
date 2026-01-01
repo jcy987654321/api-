@@ -5,8 +5,11 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ApiManageController;
 use App\Http\Controllers\Admin\BlogManageController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,26 +83,33 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             Route::get('/{id}/edit', [BlogManageController::class, 'edit'])->name('admin.blogs.edit');
             Route::put('/{id}', [BlogManageController::class, 'update'])->name('admin.blogs.update');
             Route::delete('/{id}', [BlogManageController::class, 'destroy'])->name('admin.blogs.destroy');
+            Route::post('/{id}/publish', [BlogManageController::class, 'publish'])->name('admin.blogs.publish');
+            Route::post('/{id}/draft', [BlogManageController::class, 'changeDraft'])->name('admin.blogs.draft');
+        });
 
-            // Blog Categories
-            Route::prefix('categories')->group(function () {
-                Route::get('/', [BlogManageController::class, 'categories'])->name('admin.blog-categories.index');
-                Route::get('/create', [BlogManageController::class, 'createCategory'])->name('admin.blog-categories.create');
-                Route::post('/', [BlogManageController::class, 'storeCategory'])->name('admin.blog-categories.store');
-                Route::get('/{id}/edit', [BlogManageController::class, 'editCategory'])->name('admin.blog-categories.edit');
-                Route::put('/{id}', [BlogManageController::class, 'updateCategory'])->name('admin.blog-categories.update');
-                Route::delete('/{id}', [BlogManageController::class, 'destroyCategory'])->name('admin.blog-categories.destroy');
-            });
+        // Blog Categories
+        Route::prefix('categories')->group(function () {
+            Route::get('/', [CategoryController::class, 'index'])->name('admin.categories.index');
+            Route::get('/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+            Route::post('/', [CategoryController::class, 'store'])->name('admin.categories.store');
+            Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+            Route::put('/{id}', [CategoryController::class, 'update'])->name('admin.categories.update');
+            Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+        });
 
-            // Blog Tags
-            Route::prefix('tags')->group(function () {
-                Route::get('/', [BlogManageController::class, 'tags'])->name('admin.blog-tags.index');
-                Route::get('/create', [BlogManageController::class, 'createTag'])->name('admin.blog-tags.create');
-                Route::post('/', [BlogManageController::class, 'storeTag'])->name('admin.blog-tags.store');
-                Route::get('/{id}/edit', [BlogManageController::class, 'editTag'])->name('admin.blog-tags.edit');
-                Route::put('/{id}', [BlogManageController::class, 'updateTag'])->name('admin.blog-tags.update');
-                Route::delete('/{id}', [BlogManageController::class, 'destroyTag'])->name('admin.blog-tags.destroy');
-            });
+        // Blog Tags
+        Route::prefix('tags')->group(function () {
+            Route::get('/', [TagController::class, 'index'])->name('admin.tags.index');
+            Route::get('/create', [TagController::class, 'create'])->name('admin.tags.create');
+            Route::post('/', [TagController::class, 'store'])->name('admin.tags.store');
+            Route::get('/{id}/edit', [TagController::class, 'edit'])->name('admin.tags.edit');
+            Route::put('/{id}', [TagController::class, 'update'])->name('admin.tags.update');
+            Route::delete('/{id}', [TagController::class, 'destroy'])->name('admin.tags.destroy');
+        });
+
+        // User Management
+        Route::prefix('users')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
         });
         
         // Settings routes
