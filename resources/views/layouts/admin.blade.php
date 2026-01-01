@@ -138,7 +138,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('admin.settings') }}">
+                                <a class="dropdown-item" href="{{ route('admin.settings.index') }}">
                                     <i class="bi bi-gear me-2"></i> Settings
                                 </a>
                             </li>
@@ -225,12 +225,12 @@
 
                         <!-- Blog Management -->
                         <li class="nav-item has-submenu">
-                            <a href="#" class="nav-link {{ Request::is('admin/blogs*') ? 'active' : '' }} submenu-toggle">
+                            <a href="#" class="nav-link {{ (Request::is('admin/blogs*') || Request::is('admin/categories*') || Request::is('admin/tags*')) ? 'active' : '' }} submenu-toggle">
                                 <i class="bi bi-journal-text menu-icon"></i>
                                 <span class="menu-text">Blog Management</span>
                                 <i class="bi bi-chevron-down submenu-arrow"></i>
                             </a>
-                            <ul class="nav flex-column submenu {{ Request::is('admin/blogs*') ? 'show' : '' }}">
+                            <ul class="nav flex-column submenu {{ (Request::is('admin/blogs*') || Request::is('admin/categories*') || Request::is('admin/tags*')) ? 'show' : '' }}">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.blogs.index') }}" class="nav-link {{ Request::is('admin/blogs') ? 'active' : '' }}">
                                         <i class="bi bi-list-ul menu-icon"></i>
@@ -244,13 +244,13 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.blog-categories.index') }}" class="nav-link">
+                                    <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}">
                                         <i class="bi bi-tags menu-icon"></i>
                                         <span class="menu-text">Categories</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.blog-tags.index') }}" class="nav-link">
+                                    <a href="{{ route('admin.tags.index') }}" class="nav-link {{ Request::is('admin/tags*') ? 'active' : '' }}">
                                         <i class="bi bi-hash menu-icon"></i>
                                         <span class="menu-text">Tags</span>
                                     </a>
@@ -319,7 +319,7 @@
                             </a>
                             <ul class="nav flex-column submenu {{ Request::is('admin/settings*') || Request::is('admin/users*') || Request::is('admin/links*') || Request::is('admin/logs*') ? 'show' : '' }}">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.settings') }}" class="nav-link {{ Request::is('admin/settings') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.settings.index') }}" class="nav-link {{ Request::is('admin/settings') ? 'active' : '' }}">
                                         <i class="bi bi-globe menu-icon"></i>
                                         <span class="menu-text">Site Settings</span>
                                     </a>

@@ -312,7 +312,7 @@
                         <a href="{{ route('admin.plugins.index') }}" class="btn btn-admin btn-admin-primary" style="background-color: #9b59b6; border-color: #9b59b6;">
                             <i class="bi bi-plugin me-2"></i> Manage Plugins
                         </a>
-                        <a href="{{ route('admin.settings') }}" class="btn btn-admin btn-admin-warning" style="background-color: #f59e0b; border-color: #f59e0b;">
+                        <a href="{{ route('admin.settings.index') }}" class="btn btn-admin btn-admin-warning" style="background-color: #f59e0b; border-color: #f59e0b;">
                             <i class="bi bi-gear me-2"></i> Site Settings
                         </a>
                     </div>
