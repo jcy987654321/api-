@@ -9,16 +9,22 @@ class ApiController extends Controller
 {
     public function index()
     {
-        return view('pages.apis.index');
+        return view('pages.apis.index', ['seoPage' => 'apis']);
     }
 
     public function show($id)
     {
-        return view('pages.apis.show', compact('id'));
+        return view('pages.apis.show', [
+            'id' => $id,
+            'seoPage' => 'apis',
+            'seoData' => [
+                'title' => 'API #' . $id,
+            ],
+        ]);
     }
 
     public function test()
     {
-        return view('pages.api-test');
+        return view('pages.api-test', ['seoPage' => 'apis']);
     }
 }

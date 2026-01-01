@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\BlogManageController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\LinkManageController;
+use App\Http\Controllers\Admin\SeoController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserController;
 
@@ -126,8 +129,22 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
         
         // Settings routes
         Route::prefix('settings')->group(function () {
-            Route::get('/', [SettingsController::class, 'index'])->name('admin.settings.index');
-            Route::post('/update', [SettingsController::class, 'update'])->name('admin.settings.update');
+            Route::get('/', [SettingController::class, 'index'])->name('admin.settings.index');
+            Route::get('/group/{group}', [SettingController::class, 'group'])->name('admin.settings.group');
+            Route::put('/group/{group}', [SettingController::class, 'updateGroup'])->name('admin.settings.group.update');
+            Route::get('/{key}/edit', [SettingController::class, 'edit'])->name('admin.settings.edit');
+            Route::put('/{key}', [SettingController::class, 'update'])->name('admin.settings.update');
+        });
+
+        // SEO routes
+        Route::prefix('seo')->group(function () {
+            Route::get('/', [SeoController::class, 'index'])->name('admin.seo.index');
+            Route::get('/create', [SeoController::class, 'create'])->name('admin.seo.create');
+            Route::post('/', [SeoController::class, 'store'])->name('admin.seo.store');
+            Route::get('/{page}/edit', [SeoController::class, 'edit'])->name('admin.seo.edit');
+            Route::put('/{page}', [SeoController::class, 'update'])->name('admin.seo.update');
+            Route::delete('/{page}', [SeoController::class, 'destroy'])->name('admin.seo.destroy');
+            Route::get('/{page}/preview', [SeoController::class, 'preview'])->name('admin.seo.preview');
         });
         
         // Plugins routes
@@ -142,10 +159,19 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             Route::get('/api', [SettingsController::class, 'apiStatistics'])->name('admin.statistics.api');
             Route::get('/users', [SettingsController::class, 'userStatistics'])->name('admin.statistics.users');
         });
-        
+
         // Links routes
         Route::prefix('links')->group(function () {
-            Route::get('/', [SettingsController::class, 'links'])->name('admin.links.index');
+            Route::get('/', [LinkManageController::class, 'index'])->name('admin.links.index');
+            Route::get('/create', [LinkManageController::class, 'create'])->name('admin.links.create');
+            Route::post('/', [LinkManageController::class, 'store'])->name('admin.links.store');
+            Route::get('/{id}', [LinkManageController::class, 'show'])->name('admin.links.show');
+            Route::get('/{id}/edit', [LinkManageController::class, 'edit'])->name('admin.links.edit');
+            Route::put('/{id}', [LinkManageController::class, 'update'])->name('admin.links.update');
+            Route::post('/{id}/approve', [LinkManageController::class, 'approve'])->name('admin.links.approve');
+            Route::post('/{id}/reject', [LinkManageController::class, 'reject'])->name('admin.links.reject');
+            Route::delete('/{id}', [LinkManageController::class, 'destroy'])->name('admin.links.destroy');
+            Route::post('/reorder', [LinkManageController::class, 'updateOrder'])->name('admin.links.reorder');
         });
 
         // Log Management routes

@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BlogController extends Controller
 {
@@ -36,7 +37,13 @@ class BlogController extends Controller
         $blogs = $query->paginate(10)->withQueryString();
         $categories = Category::query()->orderBy('name')->get();
 
-        return view('pages.blog.index', compact('blogs', 'categories', 'search', 'selectedCategory'));
+        return view('pages.blog.index', [
+            'blogs' => $blogs,
+            'categories' => $categories,
+            'search' => $search,
+            'selectedCategory' => $selectedCategory,
+            'seoPage' => 'blog',
+        ]);
     }
 
     public function show(string $slug)
@@ -60,7 +67,23 @@ class BlogController extends Controller
             ->limit(4)
             ->get();
 
-        return view('pages.blog.show', compact('blog', 'relatedBlogs'));
+        $seoDescription = $blog->excerpt;
+        if (!is_string($seoDescription) || trim($seoDescription) === '') {
+            $seoDescription = Str::limit(trim(strip_tags((string) $blog->content)), 160);
+        }
+
+        $keywords = $blog->tags->pluck('name')->implode(',');
+
+        return view('pages.blog.show', [
+            'blog' => $blog,
+            'relatedBlogs' => $relatedBlogs,
+            'seoPage' => 'blog',
+            'seoData' => [
+                'title' => $blog->title,
+                'description' => $seoDescription,
+                'keywords' => $keywords,
+            ],
+        ]);
     }
 
     public function category(Request $request, string $slug)
@@ -82,7 +105,15 @@ class BlogController extends Controller
 
         $blogs = $query->paginate(10)->withQueryString();
 
-        return view('pages.blog.category', compact('category', 'blogs', 'search'));
+        return view('pages.blog.category', [
+            'category' => $category,
+            'blogs' => $blogs,
+            'search' => $search,
+            'seoPage' => 'blog',
+            'seoData' => [
+                'title' => $category->name,
+            ],
+        ]);
     }
 
     public function tag(Request $request, string $slug)
@@ -104,7 +135,15 @@ class BlogController extends Controller
 
         $blogs = $query->paginate(10)->withQueryString();
 
-        return view('pages.blog.tag', compact('tag', 'blogs', 'search'));
+        return view('pages.blog.tag', [
+            'tag' => $tag,
+            'blogs' => $blogs,
+            'search' => $search,
+            'seoPage' => 'blog',
+            'seoData' => [
+                'title' => $tag->name,
+            ],
+        ]);
     }
 
     public function search(Request $request)
@@ -124,6 +163,13 @@ class BlogController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('pages.blog.search', compact('blogs', 'search'));
+        return view('pages.blog.search', [
+            'blogs' => $blogs,
+            'search' => $search,
+            'seoPage' => 'blog',
+            'seoData' => [
+                'title' => $search !== '' ? '搜索：' . $search : '博客搜索',
+            ],
+        ]);
     }
 }

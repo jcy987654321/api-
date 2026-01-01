@@ -312,16 +312,22 @@
 
                         <!-- System Settings -->
                         <li class="nav-item has-submenu">
-                            <a href="#" class="nav-link {{ Request::is('admin/settings*') || Request::is('admin/users*') || Request::is('admin/links*') || Request::is('admin/logs*') ? 'active' : '' }} submenu-toggle">
+                            <a href="#" class="nav-link {{ Request::is('admin/settings*') || Request::is('admin/seo*') || Request::is('admin/users*') || Request::is('admin/links*') || Request::is('admin/logs*') ? 'active' : '' }} submenu-toggle">
                                 <i class="bi bi-gear menu-icon"></i>
                                 <span class="menu-text">System Settings</span>
                                 <i class="bi bi-chevron-down submenu-arrow"></i>
                             </a>
-                            <ul class="nav flex-column submenu {{ Request::is('admin/settings*') || Request::is('admin/users*') || Request::is('admin/links*') || Request::is('admin/logs*') ? 'show' : '' }}">
+                            <ul class="nav flex-column submenu {{ Request::is('admin/settings*') || Request::is('admin/seo*') || Request::is('admin/users*') || Request::is('admin/links*') || Request::is('admin/logs*') ? 'show' : '' }}">
                                 <li class="nav-item">
                                     <a href="{{ route('admin.settings.index') }}" class="nav-link {{ Request::is('admin/settings') ? 'active' : '' }}">
                                         <i class="bi bi-globe menu-icon"></i>
                                         <span class="menu-text">Site Settings</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.seo.index') }}" class="nav-link {{ Request::is('admin/seo*') ? 'active' : '' }}">
+                                        <i class="bi bi-search menu-icon"></i>
+                                        <span class="menu-text">SEO</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
