@@ -26,6 +26,17 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware(['user.auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
+    
+    // API key routes
+    Route::prefix('user/api-keys')->name('user.api-keys.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Front\UserApiController::class, 'index'])->name('index');
+        Route::get('/create', [\App\Http\Controllers\Front\UserApiController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\Front\UserApiController::class, 'store'])->name('store');
+        Route::get('/{id}', [\App\Http\Controllers\Front\UserApiController::class, 'show'])->name('show');
+        Route::delete('/{id}', [\App\Http\Controllers\Front\UserApiController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/regenerate', [\App\Http\Controllers\Front\UserApiController::class, 'regenerate'])->name('regenerate');
+        Route::get('/{id}/stats', [\App\Http\Controllers\Front\UserApiController::class, 'stats'])->name('stats');
+    });
 });
 
 // Blog routes
