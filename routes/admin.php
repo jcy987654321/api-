@@ -112,6 +112,18 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('admin.users.index');
         });
         
+        // API Key Management
+        Route::prefix('api-keys')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\ApiKeyManageController::class, 'index'])->name('admin.api-keys.index');
+            Route::get('/{id}', [\App\Http\Controllers\Admin\ApiKeyManageController::class, 'show'])->name('admin.api-keys.show');
+            Route::post('/{id}/activate', [\App\Http\Controllers\Admin\ApiKeyManageController::class, 'activate'])->name('admin.api-keys.activate');
+            Route::post('/{id}/deactivate', [\App\Http\Controllers\Admin\ApiKeyManageController::class, 'deactivate'])->name('admin.api-keys.deactivate');
+            Route::delete('/{id}', [\App\Http\Controllers\Admin\ApiKeyManageController::class, 'destroy'])->name('admin.api-keys.destroy');
+        });
+        
+        // API Logs
+        Route::get('/api-logs', [\App\Http\Controllers\Admin\ApiKeyManageController::class, 'logs'])->name('admin.api-logs.index');
+        
         // Settings routes
         Route::prefix('settings')->group(function () {
             Route::get('/', [SettingsController::class, 'index'])->name('admin.settings.index');
