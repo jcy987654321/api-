@@ -281,6 +281,29 @@
                             </ul>
                         </li>
 
+                        <!-- Feedback Management -->
+                        <li class="nav-item has-submenu">
+                            <a href="#" class="nav-link {{ Request::is('admin/feedbacks*') ? 'active' : '' }} submenu-toggle">
+                                <i class="bi bi-chat-dots menu-icon"></i>
+                                <span class="menu-text">Feedback</span>
+                                <i class="bi bi-chevron-down submenu-arrow"></i>
+                            </a>
+                            <ul class="nav flex-column submenu {{ Request::is('admin/feedbacks*') ? 'show' : '' }}">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.feedbacks.index') }}" class="nav-link {{ Request::is('admin/feedbacks') && !Request::is('admin/feedbacks/stats') ? 'active' : '' }}">
+                                        <i class="bi bi-list-ul menu-icon"></i>
+                                        <span class="menu-text">All Feedbacks</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.feedbacks.stats') }}" class="nav-link {{ Request::is('admin/feedbacks/stats') ? 'active' : '' }}">
+                                        <i class="bi bi-bar-chart menu-icon"></i>
+                                        <span class="menu-text">Statistics</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <!-- Statistics -->
                         <li class="nav-item has-submenu">
                             <a href="#" class="nav-link {{ Request::is('admin/statistics*') ? 'active' : '' }} submenu-toggle">

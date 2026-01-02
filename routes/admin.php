@@ -180,5 +180,18 @@ Route::middleware(['web'])->prefix('admin')->group(function () {
             Route::get('/view/{channel}/{date?}', [\App\Http\Controllers\Admin\LogController::class, 'view'])->name('admin.logs.view');
             Route::post('/clear', [\App\Http\Controllers\Admin\LogController::class, 'clear'])->name('admin.logs.clear');
         });
+
+        // Feedback Management routes
+        Route::prefix('feedbacks')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'index'])->name('admin.feedbacks.index');
+            Route::get('/{id}', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'show'])->name('admin.feedbacks.show');
+            Route::post('/{id}/status', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'updateStatus'])->name('admin.feedbacks.status');
+            Route::post('/{id}/priority', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'setPriority'])->name('admin.feedbacks.priority');
+            Route::post('/{id}/assign', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'assignTo'])->name('admin.feedbacks.assign');
+            Route::post('/{id}/reply', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'reply'])->name('admin.feedbacks.reply');
+            Route::delete('/{id}', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'destroy'])->name('admin.feedbacks.destroy');
+            Route::get('/export/csv', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'export'])->name('admin.feedbacks.export');
+            Route::get('/stats', [\App\Http\Controllers\Admin\FeedbackManageController::class, 'stats'])->name('admin.feedbacks.stats');
+        });
     });
 });

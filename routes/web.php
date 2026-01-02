@@ -7,6 +7,8 @@ use App\Http\Controllers\Front\ApiController;
 use App\Http\Controllers\Front\AuthController;
 use App\Http\Controllers\Front\LinkController;
 use App\Http\Controllers\Front\UserProfileController;
+use App\Http\Controllers\Front\FeedbackController;
+use App\Http\Controllers\Front\NotificationController;
 use App\Http\Controllers\Admin\RealtimeController;
 
 /*
@@ -78,6 +80,33 @@ Route::get('/links/{category}', [LinkController::class, 'getByCategory'])->name(
 Route::get('/api-internal/realtime/stream', [RealtimeController::class, 'stream'])
     ->middleware('admin.auth')
     ->name('admin.realtime.stream');
+
+// Feedback routes
+Route::get('/feedback', [FeedbackController::class, 'showForm'])->name('feedback.form');
+Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
+Route::get('/feedback/track/{id}', [FeedbackController::class, 'track'])->name('feedback.track');
+
+// User authenticated routes
+Route::middleware(['user.auth'])->group(function () {
+    // User feedback routes
+    Route::prefix('user/feedbacks')->name('feedbacks.')->group(function () {
+        Route::get('/', [FeedbackController::class, 'myFeedbacks'])->name('index');
+        Route::get('/{id}', [FeedbackController::class, 'show'])->name('show');
+        Route::post('/{id}/reply', [FeedbackController::class, 'reply'])->name('reply');
+    });
+
+    // Notification routes
+    Route::prefix('user/notifications')->name('user.notifications.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])->name('read');
+        Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])->name('read-all');
+        Route::delete('/{id}', [NotificationController::class, 'delete'])->name('delete');
+    });
+
+    // Notification preferences
+    Route::get('/user/notification-preferences', [NotificationController::class, 'preferences'])->name('user.notification-preferences');
+    Route::put('/user/notification-preferences', [NotificationController::class, 'updatePreferences'])->name('user.notification-preferences.update');
+});
 
 // Include admin routes
 require __DIR__.'/admin.php';
