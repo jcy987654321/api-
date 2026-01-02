@@ -77,4 +77,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(ApiKey::class);
     }
+
+    public function feedbacks(): HasMany
+    {
+        return $this->hasMany(Feedback::class);
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
+
+    public function notificationPreference()
+    {
+        return $this->hasOne(NotificationPreference::class);
+    }
+
+    public function assignedFeedbacks(): HasMany
+    {
+        return $this->hasMany(Feedback::class, 'assigned_to');
+    }
 }
